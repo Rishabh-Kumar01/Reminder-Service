@@ -1,4 +1,4 @@
-# Welcome to Flights Service
+# Welcome to Reminder Service
 
 ## Project Setup
 
