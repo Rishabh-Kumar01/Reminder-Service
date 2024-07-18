@@ -2,9 +2,9 @@ const utils = require("./utils/index.util");
 const config = require("./config/index.config");
 const routes = require("./routes/index.route");
 const db = require("./models/index");
+const { EmailService } = require("./services/index.services");
 
 const app = utils.imports.express();
-
 // Middlewares
 app.use(utils.imports.morgan("dev"));
 app.use(utils.imports.cors());
@@ -23,6 +23,14 @@ const setupAndStartServer = async () => {
   if (config.serverConfig.DB_SYNC === true) {
     await db.sequelize.sync({ alter: true });
   }
+
+  // Email Service
+  // await EmailService.sendBasicEmail(
+  //   "support@gmail.com",
+  //   "airlinesystem1@gmail.com",
+  //   "Welcome to Airline System",
+  //   "Thank you for signing up with us. We are excited to have you on board."
+  // );
 };
 
 // Call the function to start the server and connect to the database

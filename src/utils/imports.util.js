@@ -11,4 +11,5 @@ module.exports = {
   responseCodes: require("http-status-codes"),
   sequelize: require("sequelize"),
   axios: require("axios"),
+  nodemailer: require("nodemailer"),
 };
