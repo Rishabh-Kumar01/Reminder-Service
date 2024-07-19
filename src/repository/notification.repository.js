@@ -33,6 +33,21 @@ class NotificationRepository {
       throw new Error(error);
     }
   }
+
+  async updateNotificationStatus(id, data) {
+    try {
+      const notification = await NotificationTicket.findByPk(id);
+      if (!notification) {
+        throw new Error("Notification not found");
+      }
+      notification.status = data.status;
+      await notification.save();
+      return notification;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  }
 }
 
 module.exports = NotificationRepository;

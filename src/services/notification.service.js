@@ -1,22 +1,21 @@
-const { sender } = require("../config/index.config").email;
 const { NotificationRepository } = require("../repository/index.repository");
 
 const notificationTicket = new NotificationRepository();
 
-const sendBasicEmail = async (mailFrom, mailTo, mailSubject, mailText) => {
-  try {
-    await sender.sendMail({
-      from: mailFrom,
-      to: mailTo,
-      subject: mailSubject,
-      text: mailText,
-    });
-    return true;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-};
+// const sendBasicEmail = async (mailFrom, mailTo, mailSubject, mailText) => {
+//   try {
+//     await sender.sendMail({
+//       from: mailFrom,
+//       to: mailTo,
+//       subject: mailSubject,
+//       text: mailText,
+//     });
+//     return true;
+//   } catch (error) {
+//     console.error(error);
+//     return false;
+//   }
+// };
 
 const createNotification = async (notification) => {
   try {
@@ -27,9 +26,18 @@ const createNotification = async (notification) => {
   }
 };
 
-const fetchPendingNotifications = async () => {
+const fetchPendingNotifications = async (filter) => {
   try {
-    return await notificationTicket.fetchPendingNotifications();
+    return await notificationTicket.fetchPendingNotifications(filter);
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+
+const updateNotificationStatus = async (id, data) => {
+  try {
+    return await notificationTicket.updateNotificationStatus(id, data);
   } catch (error) {
     console.error(error);
     throw new Error(error);
@@ -37,7 +45,8 @@ const fetchPendingNotifications = async () => {
 };
 
 module.exports = {
-  sendBasicEmail,
+  // sendBasicEmail,
   createNotification,
   fetchPendingNotifications,
+  updateNotificationStatus,
 };

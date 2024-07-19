@@ -13,6 +13,7 @@ app.use(utils.imports.compression());
 app.use(utils.imports.bodyParser.json());
 app.use(utils.imports.bodyParser.urlencoded({ extended: true }));
 app.use("/api", routes);
+utils.jobs();
 
 // Server & Database Connection
 const setupAndStartServer = async () => {
