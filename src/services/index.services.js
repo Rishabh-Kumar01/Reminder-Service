@@ -1,3 +1,3 @@
 module.exports = {
-  EmailService: require("./email.service"),
+  NotificationService: require("./notification.service"),
 };

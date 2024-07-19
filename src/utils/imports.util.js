@@ -12,4 +12,5 @@ module.exports = {
   sequelize: require("sequelize"),
   axios: require("axios"),
   nodemailer: require("nodemailer"),
+  cron: require("node-cron"),
 };
