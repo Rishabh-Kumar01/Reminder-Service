@@ -13,4 +13,5 @@ module.exports = {
   axios: require("axios"),
   nodemailer: require("nodemailer"),
   cron: require("node-cron"),
+  amqplib: require("amqplib"),
 };

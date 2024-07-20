@@ -3,6 +3,7 @@ const {
   NotificationController,
 } = require("../../controllers/index.controller");
 
+
 router.post("/notification", NotificationController.createNotification);
 
 module.exports = router;
