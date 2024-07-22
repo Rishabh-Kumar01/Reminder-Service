@@ -2,20 +2,20 @@ const { NotificationRepository } = require("../repository/index.repository");
 
 const notificationTicket = new NotificationRepository();
 
-// const sendBasicEmail = async (mailFrom, mailTo, mailSubject, mailText) => {
-//   try {
-//     await sender.sendMail({
-//       from: mailFrom,
-//       to: mailTo,
-//       subject: mailSubject,
-//       text: mailText,
-//     });
-//     return true;
-//   } catch (error) {
-//     console.error(error);
-//     return false;
-//   }
-// };
+const sendBasicEmail = async (mailFrom, mailTo, mailSubject, mailText) => {
+  try {
+    await sender.sendMail({
+      from: mailFrom,
+      to: mailTo,
+      subject: mailSubject,
+      text: mailText,
+    });
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
 
 const createNotification = async (notification) => {
   try {
@@ -44,9 +44,26 @@ const updateNotificationStatus = async (id, data) => {
   }
 };
 
+const subscribeEvents = async (payload) => {
+  let service = payload.service;
+  let data = payload.data;
+  switch (service) {
+    case "CREATE_TICKET":
+      await createNotification(data);
+      break;
+    case "SEND_BASIC_MAIL":
+      await sendBasicEmail(data);
+      break;
+    default:
+      console.log("No valid event received");
+      break;
+  }
+};
+
 module.exports = {
-  // sendBasicEmail,
+  sendBasicEmail,
   createNotification,
   fetchPendingNotifications,
   updateNotificationStatus,
+  subscribeEvents,
 };

@@ -2,6 +2,9 @@ const utils = require("./utils/index.util");
 const config = require("./config/index.config");
 const routes = require("./routes/index.route");
 const db = require("./models/index");
+const { subscribeMessage, createChannel } =
+  require("./utils/index.util").messageQueue;
+const { NotificationService } = require("./services/index.services");
 
 const app = utils.imports.express();
 
@@ -16,6 +19,13 @@ const setupAndStartServer = async () => {
   app.use(utils.imports.bodyParser.urlencoded({ extended: true }));
   app.use("/api", routes);
   utils.jobs();
+
+  const channel = await createChannel();
+  await subscribeMessage(
+    channel,
+    NotificationService.subscribeEvents,
+    config.serverConfig.REMINDER_BINDING_KEY
+  );
 
   app.listen(config.serverConfig.PORT, async () => {
     console.log(`SERVER IS RUNNING ON PORT ${config.serverConfig.PORT}`);
