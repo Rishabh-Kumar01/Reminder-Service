@@ -20,6 +20,7 @@ const setupAndStartServer = async () => {
   app.use("/api", routes);
   utils.jobs();
 
+  // Message Queue Connection and Subscription
   const channel = await createChannel();
   await subscribeMessage(
     channel,

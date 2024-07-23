@@ -7,8 +7,9 @@ class NotificationRepository {
       const ticket = await NotificationTicket.create({
         content: data.content,
         subject: data.subject,
-        recepientEmail: data.recepientEmail,
+        recipientEmail: data.recipientEmail,
         notificationTime: data.notificationTime,
+        type: data.type,
       });
       return ticket;
     } catch (error) {

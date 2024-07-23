@@ -44,12 +44,61 @@ const updateNotificationStatus = async (id, data) => {
   }
 };
 
+const createBookingConfirmationNotification = async (bookingData) => {
+  const notification = {
+    type: "BOOKING_CONFIRMATION",
+    subject: "Booking Confirmation",
+    content: `Your booking for flight ${bookingData.flightNumber} has been confirmed.`,
+    recipientEmail: bookingData.recipientEmail,
+    notificationTime: bookingData.notificationTime,
+    metadata: {
+      bookingId: bookingData.bookingId,
+      flightId: bookingData.flightId,
+    },
+  };
+  return await createNotification(notification);
+};
+
+const createBookingReminderNotification = async (bookingData) => {
+  const reminderTime = new Date(bookingData.departureTime);
+  reminderTime.setHours(reminderTime.getHours() - 24);
+
+  const notification = {
+    type: "BOOKING_REMINDER",
+    subject: "Upcoming Flight Reminder",
+    content: `Reminder: Your flight ${bookingData.flightNumber} is departing in 24 hours.`,
+    recipientEmail: bookingData.recipientEmail,
+    notificationTime: reminderTime,
+    metadata: {
+      bookingId: bookingData.bookingId,
+      flightId: bookingData.flightId,
+    },
+  };
+  return await createNotification(notification);
+};
+
+const createAccountVerificationNotification = async (userData) => {
+  const notification = {
+    type: "ACCOUNT_VERIFICATION",
+    subject: "Verify Your Account",
+    content: `Please click the link to verify your account: ${userData.verificationLink}`,
+    recipientEmail: userData.email,
+    notificationTime: new Date(),
+    metadata: { userId: userData.userId },
+  };
+  return await createNotification(notification);
+};
+
 const subscribeEvents = async (payload) => {
   let service = payload.service;
   let data = payload.data;
   switch (service) {
-    case "CREATE_TICKET":
-      await createNotification(data);
+    case "CREATE_BOOKING":
+      await createBookingConfirmationNotification(data);
+      await createBookingReminderNotification(data);
+      break;
+    case "CREATE_USER":
+      await createAccountVerificationNotification(data);
       break;
     case "SEND_BASIC_MAIL":
       await sendBasicEmail(data);

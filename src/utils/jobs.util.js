@@ -12,7 +12,7 @@ const setupJobs = () => {
     response.forEach((notification) => {
       sender.sendMail(
         {
-          to: notification.recepientEmail,
+          to: notification.recipientEmail,
           subject: notification.subject,
           text: notification.content,
         },

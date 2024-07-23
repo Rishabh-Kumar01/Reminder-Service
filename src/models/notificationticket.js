@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      recepientEmail: {
+      recipientEmail: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -30,6 +30,15 @@ module.exports = (sequelize, DataTypes) => {
         values: ["PENDING", "SUCCESS", "FAILED"],
         allowNull: false,
         defaultValue: "PENDING",
+      },
+      type: {
+        type: DataTypes.ENUM,
+        values: [
+          "BOOKING_CONFIRMATION",
+          "BOOKING_REMINDER",
+          "ACCOUNT_VERIFICATION",
+        ],
+        allowNull: false,
       },
       notificationTime: {
         type: DataTypes.DATE,
