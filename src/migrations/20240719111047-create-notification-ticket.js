@@ -32,6 +32,7 @@ module.exports = {
         values: [
           "BOOKING_CONFIRMATION",
           "BOOKING_REMINDER",
+          "BOOKING_CANCELLATION",
           "ACCOUNT_VERIFICATION",
         ],
         allowNull: false,

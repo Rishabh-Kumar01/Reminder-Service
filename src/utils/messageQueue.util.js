@@ -30,7 +30,7 @@ const subscribeMessage = async (channel, service, bindingKey) => {
   await channel.bindQueue(applicationQueue.queue, EXCHANGE_NAME, bindingKey);
 
   await channel.consume(applicationQueue.queue, (msg) => {
-    console.log("Message received: ", msg.content.toString());
+    console.log("🧾 Message received: ", msg.content.toString(), " 🧾");
     const data = JSON.parse(msg.content.toString());
     service(data);
     channel.ack(msg);

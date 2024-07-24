@@ -77,6 +77,21 @@ const createBookingReminderNotification = async (bookingData) => {
   return await createNotification(notification);
 };
 
+const deleteBookingConfirmationNotification = async (bookingData) => {
+  const notification = {
+    type: "BOOKING_CANCELLATION",
+    subject: "Booking Cancellation",
+    content: `Your booking for flight ${bookingData.flightNumber} has been cancelled.`,
+    recipientEmail: bookingData.recipientEmail,
+    notificationTime: bookingData.notificationTime,
+    metadata: {
+      bookingId: bookingData.bookingId,
+      flightId: bookingData.flightId,
+    },
+  };
+  return await createNotification(notification);
+};
+
 const createAccountVerificationNotification = async (userData) => {
   const notification = {
     type: "ACCOUNT_VERIFICATION",
@@ -96,6 +111,9 @@ const subscribeEvents = async (payload) => {
     case "CREATE_BOOKING":
       await createBookingConfirmationNotification(data);
       await createBookingReminderNotification(data);
+      break;
+    case "CANCEL_BOOKING":
+      await deleteBookingConfirmationNotification(data);
       break;
     case "CREATE_USER":
       await createAccountVerificationNotification(data);

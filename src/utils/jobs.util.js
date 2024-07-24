@@ -20,7 +20,7 @@ const setupJobs = () => {
           if (error) {
             console.error(error);
           } else {
-            console.log(`Email sent: ${data.response}`);
+            console.log(`'📩 Email sent: ${data.response} 📩`);
             await NotificationService.updateNotificationStatus(
               notification.id,
               {
